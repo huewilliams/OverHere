@@ -82,4 +82,22 @@ router.post('/request', async (req, res, next)=>{
     }
 });
 
+// 친구 요청 현황보기 API
+router.get('/request', async (req, res, next)=>{
+    let token = req.get("token");
+    if(token) {
+        try {
+            let auth = await verify(token, 'jwt');
+            if(auth) {
+                let result = await Request.findAll({
+                    where: {targetId: auth}
+                });
+                res.json(result);
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+});
+
 module.exports = router;
