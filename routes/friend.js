@@ -100,4 +100,30 @@ router.get('/request', async (req, res, next)=>{
     }
 });
 
+// 친구 추가 승인 API
+router.post('/', async (req, res, next)=>{
+    let token = req.get("token");
+    if(token) {
+        try {
+            let auth = await verify(token, 'jwt');
+            if(auth) {
+                let result1 = await Friend.create({
+                    targetId: req.body.targetId,
+                });
+                await result1.setUsers(auth);
+                let result2 = await Friend.create({
+                    targetId: auth,
+                });
+                await result2.setUsers(req.body.targetId);
+                await Request.destroy({
+                    where: {sender: req.body.targetId, targetId: auth}
+                });
+                res.json(result1);
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+});
+
 module.exports = router;
