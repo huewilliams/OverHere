@@ -5,6 +5,8 @@ const sequelize = require('./models').sequelize;
 const cors = require('cors');
 
 let authRouter = require('./routes/auth');
+let friendRouter = require('./routes/friend');
+let placeRouter = require('./routes/place');
 
 const app = express();
 sequelize.sync();
@@ -17,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false, limit: '50mb'}));
 
 app.use('/auth', authRouter);
+app.use('/friend', friendRouter);
+app.use('/place', placeRouter);
 
 // 해당 라우터가 없을시 404 Error 발생
 app.use((req, res, next) => {
