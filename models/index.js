@@ -21,12 +21,13 @@ db.Friend = require('./Friend')(sequelize, Sequelize);
 db.Request = require('./Request')(sequelize, Sequelize);
 db.Promise = require('./Promise')(sequelize, Sequelize);
 db.Member = require('./Member')(sequelize, Sequelize);
+db.Place = require('./Place')(sequelize, Sequelize);
 
 db.User.belongsToMany(db.Friend, {through: 'UserFriend'});
 db.Friend.belongsToMany(db.User, {through: 'UserFriend'});
 
-db.User.belongsToMany(db.Request, {through: 'UserRequest'});
-db.Request.belongsToMany(db.User, {through: 'UserRequest'});
+db.User.hasMany(db.Request, {foreignKey: 'targetId', sourceKey: 'id'});
+db.Request.belongsTo(db.User, {foreignKey: 'targetId', targetKey: 'id'});
 
 db.Promise.hasMany(db.Member, {foreignKey: 'promiseId', sourceKey: 'id'});
 db.Member.belongsTo(db.Promise, {foreignKey:  'promiseId', targetKey: 'id'});
