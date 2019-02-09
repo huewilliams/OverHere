@@ -54,4 +54,32 @@ router.get('/search/:username', async (req, res, next)=>{
     }
 });
 
+// 친구 요청 API
+router.post('/request', async (req, res, next)=>{
+    let token = req.get("token");
+    if(token) {
+        try {
+            let auth = await verify(token, 'jwt');
+            if(auth) {
+                let target = await Request.findOne({
+                    where: {sender: auth, targetId: req.body.targetId}
+                });
+                if(target) {
+                    const err = new Error('이미 친구요청을 보냄');
+                    err.status = 409;
+                    next(err);
+                } else {
+                    let result = await Request.create({
+                        sender: auth,
+                        targetId: req.body.targetId,
+                    });
+                    res.send(result);
+                }
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+});
+
 module.exports = router;
