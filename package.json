@@ -1,0 +1,28 @@
+{
+  "name": "over_here",
+  "version": "1.0.0",
+  "description": "over here : recommand place and set promise for friends",
+  "main": "app.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "iconv": "^2.3.2",
+    "jsonwebtoken": "^8.4.0",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.18.10",
+    "python": "0.0.4",
+    "request": "^2.88.0",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "sequelize": "^4.42.0",
+    "chromedriver": "^2.46.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
+  },
+  "author": "huewilliams",
+  "license": "MIT"
+}
